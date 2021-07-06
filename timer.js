@@ -1,10 +1,15 @@
 const ref = {
-    day: document.querySelector('span[data-value="days"]'),
-    hours: document.querySelector('span[data-value="hours"]'),
-    mins: document.querySelector('span[data-value="mins"]'),
-    secs: document.querySelector('span[data-value="secs"]'),
+    dayValue: document.querySelector('span[data-value="days"]'),
+    hoursValue: document.querySelector('span[data-value="hours"]'),
+    minsValue: document.querySelector('span[data-value="mins"]'),
+    secsValue: document.querySelector('span[data-value="secs"]'),
+
+    dayLabel: document.querySelector('span[data-value="days"]'),
+    hoursLabel: document.querySelector('span[data-value="hours"]'),
+    minsLabel: document.querySelector('span[data-value="mins"]'),
+    secsLabel: document.querySelector('span[data-value="secs"]'),
 }
-const countDownDate = new Date("Jul 5, 2021 22:56:25").getTime();
+const countDownDate = new Date("Jul 30, 2021 22:56:25").getTime();
 
 class Timer{
     constructor({onTick}) {
@@ -36,7 +41,7 @@ class Timer{
 }
 
 const timer = new Timer({
-    onTick: updateTimerFace
+    onTick: updateTimerValue
 });
 timer.start()
 
@@ -52,9 +57,16 @@ function getTimeComponents(time){
     return {days, hours, mins, secs}
 }
 
-function updateTimerFace({days, hours, mins, secs}) {
-    ref.day.textContent = days;
-    ref.hours.textContent = hours;
-    ref.mins.textContent = mins;
-    ref.secs.textContent = secs;
+function updateTimerValue({days, hours, mins, secs}) {
+    ref.dayValue.textContent = days;
+    ref.hoursValue.textContent = hours;
+    ref.minsValue.textContent = mins;
+    ref.secsValue.textContent = secs;
+}
+
+function updateTimerLabel({days, hours, mins, secs}) {
+    ref.dayLabel.textContent = days;
+    ref.hoursLabel.textContent = hours;
+    ref.minsLabel.textContent = mins;
+    ref.secsLabel.textContent = secs;
 }
