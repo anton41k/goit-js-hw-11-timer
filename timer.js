@@ -2,26 +2,20 @@ const ref = {
     dayValue: document.querySelector('span[data-value="days"]'),
     hoursValue: document.querySelector('span[data-value="hours"]'),
     minsValue: document.querySelector('span[data-value="mins"]'),
-    secsValue: document.querySelector('span[data-value="secs"]'),
-
-    dayLabel: document.querySelector('span[data-value="days"]'),
-    hoursLabel: document.querySelector('span[data-value="hours"]'),
-    minsLabel: document.querySelector('span[data-value="mins"]'),
-    secsLabel: document.querySelector('span[data-value="secs"]'),
+    secsValue: document.querySelector('span[data-value="secs"]')
 }
-const countDownDate = new Date("Jul 30, 2021 22:56:25").getTime();
 
-class Timer{
-    constructor({onTick}) {
+class CountdownTimer{
+    constructor({onTick, targetDate}) {
         this.intervalID = null;
         this.onTick = onTick;
+        this.targetDate = targetDate;
     }
 
     start() {
         this.intervalID = setInterval( () => {
             const nowTimer = new Date().getTime();
-            const deltaTimer = countDownDate - nowTimer;
-    
+            const deltaTimer = this.targetDate - nowTimer;
             this.onSetTimer(deltaTimer);
             if (deltaTimer < 0) {
                 this.stop()
@@ -40,8 +34,9 @@ class Timer{
     }
 }
 
-const timer = new Timer({
-    onTick: updateTimerValue
+const timer = new CountdownTimer({
+    onTick: updateTimerValue,
+    targetDate: new Date("Jul 30, 2021 22:56:25").getTime()
 });
 timer.start()
 
@@ -64,9 +59,3 @@ function updateTimerValue({days, hours, mins, secs}) {
     ref.secsValue.textContent = secs;
 }
 
-function updateTimerLabel({days, hours, mins, secs}) {
-    ref.dayLabel.textContent = days;
-    ref.hoursLabel.textContent = hours;
-    ref.minsLabel.textContent = mins;
-    ref.secsLabel.textContent = secs;
-}
