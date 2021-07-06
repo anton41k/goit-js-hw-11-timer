@@ -15,31 +15,31 @@ body {
 
   border-radius: 5px;
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
-  
+
   display: flex;
-  flex-direction:row;
-  justify-content:space-around;
-  align-items:center;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.timer .field{
+.timer .field {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   text-align: center;
 }
 
-.timer .field .value{
+.timer .field .value {
   font-size: 55px;
-  color:rgb(63, 60, 60);
-  background-color: rgba(0, 0, 0, 0.2);
+  color: rgb(250, 246, 246);
+  background-color: rgba(0, 0, 0, 0.8);
 
   border-radius: 8px;
   padding: 0 10px;
 }
 
-.timer .field .label{
+.timer .field .label {
   font-size: 15px;
-  color:rgba(15, 15, 15, 0.5);
+  color: rgba(15, 15, 15, 0.5);
 
   margin-top: 4px;
 }
