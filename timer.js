@@ -1,15 +1,15 @@
-const ref = {
-    dayValue: document.querySelector('span[data-value="days"]'),
-    hoursValue: document.querySelector('span[data-value="hours"]'),
-    minsValue: document.querySelector('span[data-value="mins"]'),
-    secsValue: document.querySelector('span[data-value="secs"]')
-}
-
 class CountdownTimer{
-    constructor({onTick, targetDate}) {
+    constructor({selector, targetDate}) {
         this.intervalID = null;
-        this.onTick = onTick;
+        this.selector = selector
         this.targetDate = targetDate;
+        this.ref = {
+            dayValue: document.querySelector(`${this.selector} span[data-value="days"]`),
+            hoursValue: document.querySelector(`${this.selector} span[data-value="hours"]`),
+            minsValue: document.querySelector(`${this.selector} span[data-value="mins"]`),
+            secsValue: document.querySelector(`${this.selector} span[data-value="secs"]`)
+        };
+        this.start()
     }
 
     start() {
@@ -28,34 +28,32 @@ class CountdownTimer{
         this.onSetTimer(0);
     }
 
+    onUpdateTimerValue({days, hours, mins, secs}) {
+        this.ref.dayValue.textContent = days;
+        this.ref.hoursValue.textContent = hours;
+        this.ref.minsValue.textContent = mins;
+        this.ref.secsValue.textContent = secs;
+    }
+    
+    onPad(value) {
+        return String(value).padStart(2, "0")
+    }
+
+    onGetTimeComponents(time){
+        const days = this.onPad(Math.floor(time / (1000 * 60 * 60 * 24)));
+        const hours = this.onPad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+        const mins = this.onPad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
+        const secs = this.onPad(Math.floor((time % (1000 * 60)) / 1000));
+        return {days, hours, mins, secs}
+    }
+
     onSetTimer(deltaTimer) {
-        const timer = getTimeComponents(deltaTimer);
-        this.onTick(timer);
+        const timer = this.onGetTimeComponents(deltaTimer);
+        this.onUpdateTimerValue(timer);
     }
 }
 
 const timer = new CountdownTimer({
-    onTick: updateTimerValue,
+    selector: '#timer-1',
     targetDate: new Date("Jul 30, 2021 22:56:25").getTime()
 });
-timer.start()
-
-function pad(value) {
-    return String(value).padStart(2, "0")
-}
-
-function getTimeComponents(time){
-    const days = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
-    const hours = pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-    const mins = pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-    const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
-    return {days, hours, mins, secs}
-}
-
-function updateTimerValue({days, hours, mins, secs}) {
-    ref.dayValue.textContent = days;
-    ref.hoursValue.textContent = hours;
-    ref.minsValue.textContent = mins;
-    ref.secsValue.textContent = secs;
-}
-
